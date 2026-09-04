@@ -1,0 +1,2 @@
+;; Negative fixture: top-level form is not (document ...). Loader should reject.
+(html (body "nope"))

@@ -1,0 +1,15 @@
+;; First fixture page — the §3 example from the spec.
+(document
+  (head (title "Hello"))
+  (body
+    (div (@ (id "root") (class "container"))
+      (p "Hello, world")
+      (button (@ (id "btn")) "Click me"))
+    (style
+      (rule (tag body)        (background-color "white") (padding 10))
+      (rule (class container) (background-color "#cceeff") (padding 20) (width 400))
+      (rule (id btn)          (background-color "#3366cc") (color "white") (padding 8)))
+    (script
+      (on! (get-element "btn") "click"
+        (lambda (ev)
+          (set-text! (get-element "root") "Clicked!"))))))

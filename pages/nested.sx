@@ -1,0 +1,10 @@
+;; Deeper nesting, mixed text + element children, duplicate class, inline span.
+(document
+  (head (title "Nested"))
+  (body
+    (div (@ (id "outer") (class "box"))
+      (div (@ (id "inner") (class "box"))
+        (p "Para " (span (@ (class "hl")) "with a span") " inside")
+        (p "Second paragraph"))
+      (button (@ (id "a")) "A")
+      (button (@ (id "b")) "B"))))
