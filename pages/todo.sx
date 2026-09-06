@@ -1,0 +1,33 @@
+;; Dynamic DOM (M5): scripts create, append, and remove nodes.
+;; "Add" appends a new item; "Clear" removes them all.
+(document
+  (head (title "Todo"))
+  (body
+    (div (@ (id "app"))
+      (p (@ (class "title")) "Things to do")
+      (div (@ (id "list") (class "list"))
+        (p (@ (class "item")) "write a browser"))
+      (button (@ (id "add")) "Add")
+      (button (@ (id "clear")) "Clear"))
+    (style
+      (rule (tag body)    (background-color "white") (padding 16))
+      (rule (class title) (background-color "#333333") (color "white") (padding 6) (width 300))
+      (rule (class list)  (background-color "#eeeeee") (padding 8) (width 300))
+      (rule (class item)  (background-color "#ffffff") (padding 4) (margin 2))
+      (rule (tag button)  (background-color "#2a9d8f") (color "white") (padding 8) (margin 4)))
+    (script
+      (define list (get-element "list"))
+      (define items '())          ; handles we created, newest first
+      (define counter 1)
+      (on! (get-element "add") "click"
+        (lambda (ev)
+          (define item (create-element "p"))
+          (set-attribute! item "class" "item")
+          (set-text! item (string-append "item " (number->string counter)))
+          (set! counter (+ counter 1))
+          (append-child! list item)
+          (set! items (cons item items))))
+      (on! (get-element "clear") "click"
+        (lambda (ev)
+          (for-each (lambda (h) (remove-child! list h)) items)
+          (set! items '()))))))

@@ -1,0 +1,21 @@
+;; Counter: sandbox state survives across events. Click "+1" repeatedly.
+(document
+  (head (title "Counter"))
+  (body
+    (div (@ (id "app") (class "card"))
+      (p "You have clicked " (span (@ (id "count") (class "num")) "0") " times.")
+      (button (@ (id "inc")) "+1")
+      (button (@ (id "reset")) "reset"))
+    (style
+      (rule (tag body)   (background-color "#f4f4f4") (padding 16))
+      (rule (class card) (background-color "white") (padding 24) (width 360))
+      (rule (class num)  (background-color "#ffe680") (padding 2))
+      (rule (tag button) (background-color "#3366cc") (color "white") (padding 8) (margin 4))
+      (rule (id reset)   (background-color "#999999")))
+    (script
+      (define n 0)
+      (define (show!) (set-text! (get-element "count") (number->string n)))
+      (on! (get-element "inc") "click"
+        (lambda (ev) (set! n (+ n 1)) (show!)))
+      (on! (get-element "reset") "click"
+        (lambda (ev) (set! n 0) (show!))))))
